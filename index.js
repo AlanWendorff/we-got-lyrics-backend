@@ -26,7 +26,7 @@ app.get('/', (req, res) => {
   .then(data => {
     // use CircularJSON because the response
     // has circular references in it
-    console.log(data);
+    console.log("obtuve data");
     res.send(data);
   })
   // check for errors
