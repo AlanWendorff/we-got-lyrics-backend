@@ -20,7 +20,7 @@ axios.get('https://api.pandascore.co/csgo/matches?&token=yVPKLDCsTsxGSJcEWb_gbzD
   // use CircularJSON because the response
   // has circular references in it
   console.log(data);
-  res.send(data);
+  //res.send(data);
 })
 // check for errors
 .catch(error=> {
