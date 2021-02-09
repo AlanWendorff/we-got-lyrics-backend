@@ -8,7 +8,7 @@ const cors           = require('cors');
 // initialize the app
 const app = express();
 
-res.header("Acces-Control-Allow-Origin", "*");
+/* res.header("Acces-Control-Allow-Origin", "*"); */
 app.use(function (req, res, next) {
   res.header("Acces-Control-Allow-Origin", "*");
   res.header("Acces-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
