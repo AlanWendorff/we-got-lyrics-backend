@@ -10,11 +10,6 @@ const app = express();
 app.use(express.json({ extended: true }));
 
 app.use(cors());
-/* app.use(function (req, res, next) {
-  res.header("Acces-Control-Allow-Origin", "*");
-  res.header("Acces-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-}) */
 
 // Importar rutas
 app.use('/api/nextmatches', require('./routes/nextmatches'));
