@@ -15,6 +15,8 @@ app.use(cors());
 app.use('/api/nextmatches', require('./routes/nextmatches'));
 app.use('/api/prevmatches', require('./routes/prevmatches'));
 app.use('/api/tournamentmatches', require('./routes/tournamentmatches'));
+app.use('/api/teamscore', require('./routes/teamScore'));
+app.use('/api/getcolor', require('./routes/color'));
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, "0.0.0.0", () => {

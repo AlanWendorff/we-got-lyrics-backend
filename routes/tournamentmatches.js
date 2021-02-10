@@ -4,8 +4,8 @@ const axios  = require('axios');
 
 const callAPI = async (id) => {
     try {
-        const respuestaAPI = await axios.get(`https://api.pandascore.co/csgo/matches?filter[league_id]=${id}&sort=begin_at&filter[status]=not_started,running&token=yVPKLDCsTsxGSJcEWb_gbzDiC6NSWVQ3thriZ3Qft_p6lGvLxPc`)
-        const {data} = respuestaAPI;
+        let respuestaAPI = await axios.get(`https://api.pandascore.co/csgo/matches?filter[league_id]=${id}&sort=begin_at&filter[status]=not_started,running&token=yVPKLDCsTsxGSJcEWb_gbzDiC6NSWVQ3thriZ3Qft_p6lGvLxPc`)
+        let {data} = respuestaAPI;
         return data;
     } catch (error) {
         console.log(error);
@@ -13,8 +13,8 @@ const callAPI = async (id) => {
 }
 
 router.get('/:id', async (req, res) => {
-    const id = req.params.id;
-    const response = await callAPI(id);
+    let id = req.params.id;
+    let response = await callAPI(id);
     res.send(response);
 });
 
