@@ -15,6 +15,7 @@ app.use(cors());
 app.use('/api/nextmatches', require('./routes/nextmatches'));
 app.use('/api/prevmatches', require('./routes/prevmatches'));
 app.use('/api/tournamentmatches', require('./routes/tournamentmatches'));
+app.use('/api/allmatches', require('./routes/allmatches'));
 app.use('/api/teamscore', require('./routes/teamScore'));
 app.use('/api/getcolor', require('./routes/color'));
 
