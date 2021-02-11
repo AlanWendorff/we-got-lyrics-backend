@@ -29,6 +29,7 @@ const setNewTournament = (data) =>{
             }
         }
         let onlyInB = torneos.filter(comparer(torneosDatabase));
+        
         let cleanTournaments = onlyInB.filter((v,i,a)=>a.findIndex(t=>(t.id === v.id))===i);
 
         cleanTournaments.map(tournament=> {

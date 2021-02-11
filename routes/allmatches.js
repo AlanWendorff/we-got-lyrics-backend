@@ -7,7 +7,7 @@ const callAPI = async () => {
     try {
         let respuestaAPI = await axios.get(`https://api.pandascore.co/csgo/matches?sort=begin_at&filter[status]=not_started,running&token=yVPKLDCsTsxGSJcEWb_gbzDiC6NSWVQ3thriZ3Qft_p6lGvLxPc`)
         let {data} = respuestaAPI;
-        console.log("voy a llamar a nuevo tournament");
+        //console.log("voy a llamar a nuevo tournament");
         if (data.length > 0) {
             setNewTournament(data);
         }
