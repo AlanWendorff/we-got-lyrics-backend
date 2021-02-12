@@ -8,9 +8,6 @@ const callAPI = async () => {
         let respuestaAPI = await axios.get(`https://api.pandascore.co/csgo/matches?sort=begin_at&filter[status]=not_started,running&token=yVPKLDCsTsxGSJcEWb_gbzDiC6NSWVQ3thriZ3Qft_p6lGvLxPc`)
         let {data} = respuestaAPI;
         //console.log("voy a llamar a nuevo tournament");
-        if (data.length > 0) {
-            setNewTournament(data);
-        }
         return data;
     } catch (error) {
         console.log(error);
@@ -20,6 +17,9 @@ const callAPI = async () => {
 router.get('/', async (req, res) => {
     let response = await callAPI();
     res.send(response);
+    if (response.length > 0) {
+        setNewTournament(response);
+    }
 });
 
 module.exports = router;

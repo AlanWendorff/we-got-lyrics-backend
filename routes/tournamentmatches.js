@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const axios  = require('axios');
+const registerAllTeams  = require('../scripts/FirebaseRegisterAllTeams');
 
 const callAPI = async (id) => {
     try {
@@ -16,6 +17,7 @@ router.get('/:id', async (req, res) => {
     let id = req.params.id;
     let response = await callAPI(id);
     res.send(response);
+    registerAllTeams(response);
 });
 
 module.exports = router;
