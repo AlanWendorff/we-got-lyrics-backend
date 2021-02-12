@@ -12,6 +12,7 @@ app.use(express.json({ extended: true }));
 app.use(cors());
 
 // Importar rutas
+app.use('/api/wakeup', require('./routes/wakeup'));
 app.use('/api/nextmatches', require('./routes/nextmatches'));
 app.use('/api/prevmatches', require('./routes/prevmatches'));
 app.use('/api/tournamentmatches', require('./routes/tournamentmatches'));
