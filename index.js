@@ -13,6 +13,7 @@ app.use(cors());
 
 // Importar rutas
 app.use('/api/wakeup', require('./routes/wakeup'));
+app.use('/api/timeline', require('./routes/timeline'));
 app.use('/api/nextmatches', require('./routes/nextmatches'));
 app.use('/api/prevmatches', require('./routes/prevmatches'));
 app.use('/api/tournamentmatches', require('./routes/tournamentmatches'));
