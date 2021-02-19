@@ -18,7 +18,7 @@ router.get('/:teamId', async (req, res) => {
     let teamId = req.params.teamId;
     let response = await callAPI(teamId);
     res.send(response);
-    if (response.length > 0) {
+    if (response.data.length > 0) {
         registerTeam(response, teamId);
         setNewTournament(response);
     }

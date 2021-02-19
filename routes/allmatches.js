@@ -17,7 +17,7 @@ const callAPI = async () => {
 router.get('/', async (req, res) => {
     let response = await callAPI();
     res.send(response);
-    if (response.length > 0) {
+    if (response.data.length > 0) {
         setNewTournament(response);
     }
 });
