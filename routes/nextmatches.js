@@ -18,10 +18,9 @@ router.get('/:teamId', async (req, res) => {
     let teamId = req.params.teamId;
     let response = await callAPI(teamId);
     res.send(response);
-    if (response.data.length > 0) {
-        registerTeam(response, teamId);
-        setNewTournament(response);
-    }
+    registerTeam(response, teamId);
+    setNewTournament(response);
+    
 });
 
 module.exports = router;
