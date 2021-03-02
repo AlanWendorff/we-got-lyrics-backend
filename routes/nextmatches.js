@@ -3,6 +3,7 @@ const router = express.Router();
 const axios  = require('axios');
 const registerTeam  = require('../scripts/FirebaseRegisterTeam');
 const setNewTournament  = require('../scripts/FirebaseSetNewTournament');
+const updateLogo  = require('../scripts/UpdateLogo');
 
 const callAPI = async (teamId) => {
     try {
@@ -20,7 +21,7 @@ router.get('/:teamId', async (req, res) => {
     res.send(response);
     registerTeam(response, teamId);
     setNewTournament(response);
-    
+    updateLogo(response);
 });
 
 module.exports = router;

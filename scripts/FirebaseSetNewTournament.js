@@ -39,7 +39,12 @@ const setNewTournament = (data) =>{
         let cleanTournaments = onlyInB.filter((v,i,a)=>a.findIndex(t=>(t.id === v.id))===i);
 
         cleanTournaments.map(tournament=> {
-            database.ref().child('tournament').push(tournament);
+            database.ref().child('tournament/'+tournament.path).set({
+                "id" : tournament.id,
+                "image_url" : tournament.image_url,
+                "name" : tournament.name,
+                "path" : tournament.path
+            });
         })
     });
 }

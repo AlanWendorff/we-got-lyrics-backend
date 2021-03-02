@@ -12,7 +12,7 @@ const registerAllTeams = (data) =>{
 
     pathsDatabase.then(pathsDatabase => {
         let teams = [];
-        const matchesFiltered = data.filter(status => status.status !== "canceled");
+        let matchesFiltered = data.filter(status => status.status !== "canceled");
         matchesFiltered.map(match => {
             let {opponents} = match;
             if (opponents.length !== 0) {
@@ -44,7 +44,12 @@ const registerAllTeams = (data) =>{
         cleanTeam.map(team=> {
             let {path} = team;
             if (path !== undefined) {
-                database.ref().child('paths').push(team);
+                database.ref().child('paths/'+path).push({
+                    "id" : team.id,
+                    "image_url" : team.image_url,
+                    "name" : team.name,
+                    "path" : team.path
+                });
             }
         })
     });
