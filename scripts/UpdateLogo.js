@@ -1,6 +1,6 @@
 const FirebaseConfig  = require('../config/FirebaseConfig');
 
-const updateLogo = (data) =>{
+const updateLogo = (response) =>{
     const database = FirebaseConfig();
     let pathsDatabase = database.ref('paths').once('value').then(function (snapshot) {
         let responseOfDatabase = snapshot.val();
@@ -9,7 +9,7 @@ const updateLogo = (data) =>{
     }); 
 
     pathsDatabase.then(pathsDatabase => {
-        data.map(match => {
+        response.map(match => {
             let {opponents} = match;
             if (opponents.length !== 0) {
                 opponents.map(opponent => {

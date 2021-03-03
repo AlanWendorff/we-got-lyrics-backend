@@ -23,8 +23,8 @@ router.get('/:id', async (req, res) => {
     let id = req.params.id;
     let response = await callAPI(id);
     res.send(response);
-    registerAllTeams(response);
-    updateLogo(response);
+    registerAllTeams(response.data);
+    updateLogo(response.data);
 });
 
 module.exports = router;

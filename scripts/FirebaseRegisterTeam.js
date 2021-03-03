@@ -44,9 +44,9 @@ const registerTeam = (data, Teamid) =>{
         cleanTeam.map(team=> {
             let {path} = team;
             if (path !== undefined) {
-                database.ref().child('paths/'+path).push({
+                database.ref().child('paths/'+path).set({
                     "id" : team.id,
-                    "image_url" : team.image_url,
+                    "img" : team.img,
                     "name" : team.name,
                     "path" : team.path
                 });
