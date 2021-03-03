@@ -1,7 +1,7 @@
 const FirebaseConfig  = require('../config/FirebaseConfig');
 const csgoLogo  = require('../images/csgoLogo');
 
-const registerTeam = (data, Teamid) =>{
+const registerTeam = (response, Teamid) =>{
 
     const database = FirebaseConfig();
     let pathsDatabase = database.ref('paths').once('value').then(function (snapshot) {
@@ -12,7 +12,7 @@ const registerTeam = (data, Teamid) =>{
 
     pathsDatabase.then(pathsDatabase => {
         let teams = [];
-        const matchesFiltered = data.filter(status => status.status !== "canceled");
+        const matchesFiltered = response.filter(status => status.status !== "canceled");
         matchesFiltered.map(match => {
             let {opponents} = match;
             const counterTeam = opponents.find(element => element.opponent.id !== Teamid);
