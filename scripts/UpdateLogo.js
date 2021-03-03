@@ -15,7 +15,7 @@ const updateLogo = (response) =>{
                 opponents.map(opponent => {
                     let {image_url, name} = opponent.opponent;
                     if (name) {
-                        const teamDatabase = pathsDatabase.find(element => element.name === name);
+                        let teamDatabase = pathsDatabase.find(element => element.name === name);
                         if (teamDatabase !== undefined) {
                             if (image_url !== null) {
                                 if (teamDatabase.img !== image_url) {

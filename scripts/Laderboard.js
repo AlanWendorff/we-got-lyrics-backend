@@ -2,7 +2,7 @@ const Laderboard = (data) =>{
     let AllTeams = [];
     let AllTeamsScores = [];
     data.map(match => {
-        const {winner} = match;
+        let {winner} = match;
         AllTeams.push(
             {
                 name: winner.name,
@@ -12,7 +12,7 @@ const Laderboard = (data) =>{
     });
 
     function groupBy(list, keyGetter) {
-        const map = new Map();
+        let map = new Map();
         list.forEach((item) => {
                 const key = keyGetter(item);
                 const collection = map.get(key);
@@ -26,8 +26,8 @@ const Laderboard = (data) =>{
     };
 
     AllTeams.map(team => {
-        const grouped = groupBy(AllTeams, team => team.name);
-        const gettedTeam = grouped.get(team.name)
+        let grouped = groupBy(AllTeams, team => team.name);
+        let gettedTeam = grouped.get(team.name)
         AllTeamsScores.push(
             {
                 name: gettedTeam[0].name,
@@ -36,7 +36,7 @@ const Laderboard = (data) =>{
             }
         );
     });
-    const TeamScoresOrder = AllTeamsScores.filter((v,i,a)=>a.findIndex(t=>(t.name === v.name))===i).sort(function(a,b){return b.points-a.points});
+    let TeamScoresOrder = AllTeamsScores.filter((v,i,a)=>a.findIndex(t=>(t.name === v.name))===i).sort(function(a,b){return b.points-a.points});
     return TeamScoresOrder;
 }
 

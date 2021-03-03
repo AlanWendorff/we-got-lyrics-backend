@@ -12,10 +12,10 @@ const registerTeam = (response, Teamid) =>{
 
     pathsDatabase.then(pathsDatabase => {
         let teams = [];
-        const matchesFiltered = response.filter(status => status.status !== "canceled");
+        let matchesFiltered = response.filter(status => status.status !== "canceled");
         matchesFiltered.map(match => {
             let {opponents} = match;
-            const counterTeam = opponents.find(element => element.opponent.id !== Teamid);
+            let counterTeam = opponents.find(element => element.opponent.id !== Teamid);
             if (counterTeam.length !== 0) {
                 let {id, image_url, name, slug} = counterTeam.opponent;
                 if (image_url === null) {

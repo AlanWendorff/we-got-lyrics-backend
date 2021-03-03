@@ -11,7 +11,7 @@ const setNewTournament = (data) =>{
 
     torneosDatabase.then(torneosDatabase => {
         let torneos = [];
-        const matchesFiltered = data.filter(status => status.status !== "canceled");
+        let matchesFiltered = data.filter(status => status.status !== "canceled");
         matchesFiltered.map(match => {
             let {league} = match;
             let {id, image_url, name, slug} = league;
