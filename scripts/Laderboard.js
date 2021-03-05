@@ -3,12 +3,15 @@ const Laderboard = (data) =>{
     let AllTeamsScores = [];
     data.map(match => {
         let {winner} = match;
-        AllTeams.push(
-            {
-                name: winner.name,
-                img: winner.image_url !== null? winner.image_url : null,
-            }
-        );
+        if (winner !== null) {
+            AllTeams.push(
+                {
+                    name: winner.name,
+                    img: winner.image_url !== null? winner.image_url : null,
+                }
+            );
+        }
+        
     });
 
     function groupBy(list, keyGetter) {
