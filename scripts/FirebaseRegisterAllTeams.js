@@ -41,6 +41,7 @@ const registerAllTeams = (response) =>{
         }
         let onlyInB = teams.filter(comparer(pathsDatabase));
         let cleanTeam = onlyInB.filter((v,i,a)=>a.findIndex(t=>(t.id === v.id))===i);
+
         cleanTeam.map(team=> {
             let {path} = team;
             if (path !== undefined) {
