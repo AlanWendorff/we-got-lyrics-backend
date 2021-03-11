@@ -41,7 +41,11 @@ const registerAllTeams = (response) =>{
         }
         let onlyInB = teams.filter(comparer(pathsDatabase));
         let cleanTeam = onlyInB.filter((v,i,a)=>a.findIndex(t=>(t.id === v.id))===i);
-
+        if (cleanTeam.length > 0) {
+            console.log("se agregaron equipos");
+        }else{
+            console.log("no agregaron equipos");
+        }
         cleanTeam.map(team=> {
             let {path} = team;
             if (path !== undefined) {

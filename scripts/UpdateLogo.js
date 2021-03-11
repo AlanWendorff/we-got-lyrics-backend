@@ -13,21 +13,26 @@ const updateLogo = (response) =>{
             let {opponents} = match;
             if (opponents.length !== 0) {
                 opponents.map(opponent => {
-                    let {image_url, name} = opponent.opponent;
+                    let {image_url, name, id} = opponent.opponent;
                     if (name) {
-                        let teamDatabase = pathsDatabase.find(element => element.name === name);
+                        let teamDatabase = pathsDatabase.find(element => element.id === id);
                         if (teamDatabase !== undefined) {
                             if (image_url !== null) {
                                 if (teamDatabase.img !== image_url) {
-                                    let query = database.ref().child('paths').orderByChild("name").equalTo(name);
+                                    console.log("update logo:", teamDatabase.name);
+                                    let query = database.ref().child('paths').orderByChild("id").equalTo(id);
                                         query.once("child_added", function(snapshot) {
                                         snapshot.ref.update({ img: image_url })
                                     });
                                 }
+                                //console.log("la image url de api es null");
                             }
+                            //console.log("database undefined");
                         }
+                        //console.log("name del oponent no existe");
                     }
                 })
+                //console.log("length de oponentes es corto");
             }
         }) 
     });
