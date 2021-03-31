@@ -8,6 +8,7 @@ const callAPI = async (teamId) => {
         let respuestaAPI = await axios.get(`https://api.pandascore.co/csgo/matches/past?filter[opponent_id]=${teamId}&filter[finished]=true&token=yVPKLDCsTsxGSJcEWb_gbzDiC6NSWVQ3thriZ3Qft_p6lGvLxPc`)
         let {data} = respuestaAPI;
         let imageLeague = data[0].league.image_url;
+        
         return {
             data: data,
             imageLeague: imageLeague,

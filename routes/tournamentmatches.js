@@ -15,6 +15,7 @@ const callAPI = async (id) => {
         return {
             data: respuestaAPI.data,
             ladder: ladder,
+            lastGames: lastGames.data,
             imageLeague: imageLeague,
         };
     } catch (error) {
