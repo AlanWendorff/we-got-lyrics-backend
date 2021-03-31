@@ -10,9 +10,12 @@ const callAPI = async (id) => {
         let respuestaAPI = await axios.get(`https://api.pandascore.co/csgo/matches?filter[league_id]=${id}&filter[status]=not_started,running&token=yVPKLDCsTsxGSJcEWb_gbzDiC6NSWVQ3thriZ3Qft_p6lGvLxPc`);
         let lastGames    = await axios.get(`https://api.pandascore.co/csgo/matches?filter[league_id]=${id}&filter[status]=finished&per_page=100&token=yVPKLDCsTsxGSJcEWb_gbzDiC6NSWVQ3thriZ3Qft_p6lGvLxPc`)
         let ladder = Laderboard(lastGames.data);
+        let imageLeague = lastGames.data[0].league.image_url;
+
         return {
             data: respuestaAPI.data,
             ladder: ladder,
+            imageLeague: imageLeague,
         };
     } catch (error) {
         console.log(error);
