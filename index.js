@@ -20,6 +20,7 @@ app.use('/api/tournamentmatches', require('./routes/tournamentmatches'));
 app.use('/api/allmatches', require('./routes/allmatches'));
 app.use('/api/teamscore', require('./routes/teamScore'));
 app.use('/api/getcolor', require('./routes/color'));
+app.use('/api/roster', require('./routes/roster'));
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, "0.0.0.0", () => {
