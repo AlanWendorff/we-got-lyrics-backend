@@ -37,7 +37,7 @@ const setNewTournament = (data) =>{
         let onlyInB = torneos.filter(comparer(torneosDatabase));
         
         let cleanTournaments = onlyInB.filter((v,i,a)=>a.findIndex(t=>(t.id === v.id))===i);
-        console.log(cleanTournaments);
+        //console.log(cleanTournaments);
         cleanTournaments.map(tournament=> {
             database.ref().child('tournament/'+tournament.path).set({
                 "id" : tournament.id,
