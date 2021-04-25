@@ -1,5 +1,4 @@
 const FirebaseConfig  = require('../config/FirebaseConfig');
-const csgoLogo  = require('../images/csgoLogo');
 
 const registerAllTeams = (response) =>{
 
@@ -19,7 +18,7 @@ const registerAllTeams = (response) =>{
                 opponents.map(opponent => {
                     let {id, image_url, name, slug} = opponent.opponent;
                     if (image_url === null) {
-                        image_url = csgoLogo();
+                        image_url = "https://i.ibb.co/Hxy6gm2/csgo-Logo-Default.png";
                     }
                     teams.push(
                     {
