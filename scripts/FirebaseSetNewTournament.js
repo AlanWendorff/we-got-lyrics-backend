@@ -1,5 +1,4 @@
 const FirebaseConfig  = require('../config/FirebaseConfig');
-const csgoLogo  = require('../images/csgoLogo');
 
 const setNewTournament = (data) =>{
     const database = FirebaseConfig();
@@ -16,7 +15,7 @@ const setNewTournament = (data) =>{
             let {league} = match;
             let {id, image_url, name, slug} = league;
             if (image_url === null) {
-                image_url = csgoLogo();
+                image_url = "https://i.ibb.co/Hxy6gm2/csgo-Logo-Default.png";
             }
             torneos.push(
             {
