@@ -13,7 +13,7 @@ const setNewTournament = (data) =>{
         let matchesFiltered = data.filter(status => status.status !== "canceled");
         matchesFiltered.map(match => {
             let {league} = match;
-            let {id, image_url, name, slug} = league;
+            let {id, image_url, name} = league;
             if (image_url === null) {
                 image_url = "https://i.ibb.co/Hxy6gm2/csgo-Logo-Default.png";
             }
@@ -22,7 +22,6 @@ const setNewTournament = (data) =>{
                 "id" : id,
                 "image_url" : image_url,
                 "name" : name,
-                "path" : slug
             });
         })
 
@@ -38,11 +37,10 @@ const setNewTournament = (data) =>{
         let cleanTournaments = onlyInB.filter((v,i,a)=>a.findIndex(t=>(t.id === v.id))===i);
         //console.log(cleanTournaments);
         cleanTournaments.map(tournament=> {
-            database.ref().child('tournament/'+tournament.path).set({
+            database.ref().child('tournament/'+tournament.id).set({
                 "id" : tournament.id,
                 "image_url" : tournament.image_url,
                 "name" : tournament.name,
-                "path" : tournament.path
             });
         })
     });

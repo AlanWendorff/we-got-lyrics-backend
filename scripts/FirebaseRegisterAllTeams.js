@@ -16,7 +16,7 @@ const registerAllTeams = (response) =>{
             let {opponents} = match;
             if (opponents.length !== 0) {
                 opponents.map(opponent => {
-                    let {id, image_url, name, slug} = opponent.opponent;
+                    let {id, image_url, name} = opponent.opponent;
                     if (image_url === null) {
                         image_url = "https://i.ibb.co/Hxy6gm2/csgo-Logo-Default.png";
                     }
@@ -24,8 +24,7 @@ const registerAllTeams = (response) =>{
                     {
                         "id" : id,
                         "img" : image_url,
-                        "name" : name,
-                        "path" : slug
+                        "name" : name
                     });
                 })
             }
@@ -46,13 +45,12 @@ const registerAllTeams = (response) =>{
             console.log("no agregaron equipos");
         }
         cleanTeam.map(team=> {
-            let {path} = team;
-            if (path !== undefined) {
-                database.ref().child('paths/'+path).set({
+            let {id} = team;
+            if (id !== undefined) {
+                database.ref().child('paths/'+id).set({
                     "id" : team.id,
                     "img" : team.img,
                     "name" : team.name,
-                    "path" : team.path
                 });
             }
         })

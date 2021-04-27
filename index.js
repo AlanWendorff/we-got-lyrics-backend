@@ -24,6 +24,7 @@ app.use('/api/roster', require('./routes/roster'));
 app.use('/api/hltvranking', require('./routes/hltvranking'));
 app.use('/api/news', require('./routes/news'));
 app.use('/api/ranking', require('./routes/ranking'));
+app.use('/api/demo', require('./routes/demo'));
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, "0.0.0.0", () => {

@@ -16,7 +16,7 @@ const registerTeam = (response, Teamid) =>{
             let {opponents} = match;
             let counterTeam = opponents.find(element => element.opponent.id !== Teamid);
             if (counterTeam.length !== 0) {
-                let {id, image_url, name, slug} = counterTeam.opponent;
+                let {id, image_url, name} = counterTeam.opponent;
                 if (image_url === null) {
                     image_url = "https://i.ibb.co/Hxy6gm2/csgo-Logo-Default.png";
                 }
@@ -25,7 +25,6 @@ const registerTeam = (response, Teamid) =>{
                     "id" : id,
                     "img" : image_url,
                     "name" : name,
-                    "path" : slug
                 });
             }
         }) 
@@ -41,13 +40,12 @@ const registerTeam = (response, Teamid) =>{
         
         let cleanTeam = onlyInB.filter((v,i,a)=>a.findIndex(t=>(t.id === v.id))===i);
         cleanTeam.map(team=> {
-            let {path} = team;
-            if (path !== undefined) {
-                database.ref().child('paths/'+path).set({
+            let {id} = team;
+            if (id !== undefined) {
+                database.ref().child('paths/'+id).set({
                     "id" : team.id,
                     "img" : team.img,
                     "name" : team.name,
-                    "path" : team.path
                 });
             }
         }) 
