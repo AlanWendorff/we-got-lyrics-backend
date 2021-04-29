@@ -1,6 +1,6 @@
 const FirebaseConfig  = require('../config/FirebaseConfig');
 
-const registerTeam = (response, Teamid) =>{
+const registerTeam = (concated, id) =>{
 
     const database = FirebaseConfig();
     let pathsDatabase = database.ref('paths').once('value').then(function (snapshot) {
@@ -11,10 +11,10 @@ const registerTeam = (response, Teamid) =>{
 
     pathsDatabase.then(pathsDatabase => {
         let teams = [];
-        let matchesFiltered = response.filter(status => status.status !== "canceled");
+        let matchesFiltered = concated.filter(status => status.status !== "canceled");
         matchesFiltered.map(match => {
             let {opponents} = match;
-            let counterTeam = opponents.find(element => element.opponent.id !== Teamid);
+            let counterTeam = opponents.find(element => element.opponent.id !== id);
             if (counterTeam.length !== 0) {
                 let {id, image_url, name} = counterTeam.opponent;
                 if (image_url === null) {

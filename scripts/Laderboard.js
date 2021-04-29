@@ -1,7 +1,7 @@
-const Laderboard = (data) =>{
+const Laderboard = (apiHistoric) =>{
     let AllTeams = [];
     let AllTeamsScores = [];
-    data.map(match => {
+    apiHistoric.data.map(match => {
         let {winner} = match;
         if (winner !== null) {
             AllTeams.push(

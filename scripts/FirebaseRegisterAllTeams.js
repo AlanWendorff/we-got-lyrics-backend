@@ -14,7 +14,7 @@ const registerAllTeams = (response) =>{
         let matchesFiltered = response.filter(status => status.status !== "canceled");
         matchesFiltered.map(match => {
             let {opponents} = match;
-            if (opponents.length !== 0) {
+            if (opponents[0] !== false && opponents[1] !== false) {
                 opponents.map(opponent => {
                     let {id, image_url, name} = opponent.opponent;
                     if (image_url === null) {
@@ -39,11 +39,6 @@ const registerAllTeams = (response) =>{
         }
         let onlyInB = teams.filter(comparer(pathsDatabase));
         let cleanTeam = onlyInB.filter((v,i,a)=>a.findIndex(t=>(t.id === v.id))===i);
-        if (cleanTeam.length > 0) {
-            console.log("se agregaron equipos");
-        }else{
-            console.log("no agregaron equipos");
-        }
         cleanTeam.map(team=> {
             let {id} = team;
             if (id !== undefined) {

@@ -1,6 +1,6 @@
 const FirebaseConfig  = require('../config/FirebaseConfig');
 
-const updateLogo = (response) =>{
+const updateLogo = (concated) =>{
     const database = FirebaseConfig();
     let pathsDatabase = database.ref('paths').once('value').then(function (snapshot) {
         let responseOfDatabase = snapshot.val();
@@ -9,9 +9,9 @@ const updateLogo = (response) =>{
     }); 
 
     pathsDatabase.then(pathsDatabase => {
-        response.map(match => {
+        concated.map(match => {
             let {opponents} = match;
-            if (opponents.length !== 0) {
+            if (opponents[0] !== false && opponents[1] !== false) {
                 opponents.map(opponent => {
                     let {image_url, name, id} = opponent.opponent;
                     if (name) {
@@ -19,13 +19,18 @@ const updateLogo = (response) =>{
                         if (teamDatabase !== undefined) {
                             if (image_url !== null) {
                                 if (teamDatabase.img !== image_url) {
-                                    console.log("update logo:", teamDatabase.name);
                                     let query = database.ref().child('paths').orderByChild("id").equalTo(id);
                                         query.once("child_added", function(snapshot) {
                                         snapshot.ref.update({ img: image_url })
                                     });
                                 }
                                 //console.log("la image url de api es null");
+                            }
+                            if (teamDatabase.name !== name) {
+                                let query = database.ref().child('paths').orderByChild("id").equalTo(id);
+                                    query.once("child_added", function(snapshot) {
+                                    snapshot.ref.update({ name: name })
+                                });
                             }
                             //console.log("database undefined");
                         }
