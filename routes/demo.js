@@ -13,7 +13,7 @@ router.get("/:name", async (req, res) => {
   /* let response = HLTV.getEvents().then((res) => {
     return res;
   }); */
-  let response = HLTV.getPlayerByName({ name: "try" }).then((res) => {
+  let response = HLTV.getPlayerByName({ name: "device" }).then((res) => {
     return res;
   });
   response.then((response) => {
