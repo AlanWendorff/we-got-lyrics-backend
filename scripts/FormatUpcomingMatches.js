@@ -57,6 +57,7 @@ const formatUpcomingMatches = (apiUpcoming) => {
         }
       ],
       results: match.results,
+      official_stream_url: match.official_stream_url
     });
   });
   return upcomingFormatted;
