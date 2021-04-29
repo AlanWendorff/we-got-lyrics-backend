@@ -32,6 +32,7 @@ const formatHistoricMatches = (apiHistoric) => {
       league: {
         image_url: match.league.image_url,
         name: match.league.name,
+        id: match.league.id,
       },
       serie: {
         full_name: match.serie.full_name,
