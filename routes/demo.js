@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 const { HLTV } = require("hltv");
 
-router.get("/:name", async (req, res) => {
-  let nameee = req.params.name;
+router.get("/", async (req, res) => {
+  //let nameee = req.params.name;
   /* let rosterMod = [];
   let team = HLTV.getTeamByName({ name: nameee }).then((res) => {
     return res;
@@ -19,15 +19,18 @@ router.get("/:name", async (req, res) => {
     });
     return rosterMod;
   }); */
-  
+
   /* let response = HLTV.getRecentThreads().then((res) => {
     return res;
   }) */
   /* let events = HLTV.getEvents().then((res) => {
     return res;
   }); */
-  roster.then((roster) => {
-    res.send(roster);
+  let PlayerRanking = HLTV.getPlayerRanking().then((res) => {
+    return res;
+  });
+  PlayerRanking.then((PlayerRanking) => {
+    res.send(PlayerRanking.slice(0, 10));
   });
 });
 

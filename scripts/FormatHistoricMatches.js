@@ -1,7 +1,9 @@
 const formatHistoricMatches = (apiHistoric) => {
   let historicFormatted = [];
-
-  apiHistoric.data.map((match) => {
+  let historic = apiHistoric.data.filter(
+    (match) => match.winner !== null
+  );
+  historic.map((match) => {
     let stage;
     if (match.name.includes(":")) {
       stage = match.name.substring(
