@@ -9,8 +9,7 @@ router.get("/", async (req, res) => {
     .once("value")
     .then(function (snapshot) {
       let responseOfDatabase = snapshot.val();
-      let pathsDatabase = Object.values(responseOfDatabase);
-      return pathsDatabase;
+      return responseOfDatabase;
     });
   pathsDatabase.then((pathsDatabase) => {
     res.send(Object.values(pathsDatabase));
