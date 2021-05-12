@@ -6,16 +6,18 @@ router.get("/", (req, res) => {
   let ranking = [];
   const database = FirebaseConfig();
   let firebaseDatabase = database
-    .ref("HLTV_RANKING")
+    .ref()
     .once("value")
     .then(function (snapshot) {
       let responseOfDatabase = snapshot.val();
-      let response_HLTV_RANKING = Object.values(responseOfDatabase);
-      return response_HLTV_RANKING;
+      let responseDatabase = Object.values(responseOfDatabase);
+      return responseDatabase;
     });
 
-  let rank = firebaseDatabase.then((response_HLTV_RANKING) => {
-    response_HLTV_RANKING.map((team) => {
+  let rank = firebaseDatabase.then((responseDatabase) => {
+    let HLTVRANKING = responseDatabase[0];
+    let TEAMS = Object.values(responseDatabase[1]);
+    HLTVRANKING.map((team) => {
       let { TEXT_RANKING } = team;
       let [
         positionUnformatted,
@@ -42,9 +44,12 @@ router.get("/", (req, res) => {
       let balanceFormatted = balanceUnformatted
         .split("\n\n")[1]
         .replace(" ", "");
+      let teamInDatabase = TEAMS.find((element) => element.name.toLowerCase() === nameFormatted.toLowerCase())
       ranking.push({
         position: parseInt(positionFormatted),
         name: nameFormatted,
+        img: teamInDatabase.img,
+        id: teamInDatabase.id,
         points: parseInt(pointsFormatted),
         roster: rosterFormatted,
         balance: balanceFormatted,

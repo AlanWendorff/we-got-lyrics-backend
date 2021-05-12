@@ -1,36 +1,19 @@
 const express = require("express");
 const router = express.Router();
-const { HLTV } = require("hltv");
+const FirebaseConfig = require("../config/FirebaseConfig");
 
 router.get("/", async (req, res) => {
-  //let nameee = req.params.name;
-  /* let rosterMod = [];
-  let team = HLTV.getTeamByName({ name: nameee }).then((res) => {
-    return res;
-  });
-  let roster = team.then((response) => {
-    response.players.map((player) => {
-      let getedplayer = HLTV.getPlayer({ id: player.id }).then((res) => {
-        return res;
-      });
-      getedplayer.then((getedplayer) =>{
-        rosterMod.push(getedplayer);
-      })
+  const database = FirebaseConfig();
+  let firebaseDatabase = database
+    .ref()
+    .once("value")
+    .then(function (snapshot) {
+      let responseOfDatabase = snapshot.val();
+      let response_teams = Object.values(responseOfDatabase);
+      return response_teams;
     });
-    return rosterMod;
-  }); */
-
-  /* let response = HLTV.getRecentThreads().then((res) => {
-    return res;
-  }) */
-  /* let events = HLTV.getEvents().then((res) => {
-    return res;
-  }); */
-  let PlayerRanking = HLTV.getPlayerRanking().then((res) => {
-    return res;
-  });
-  PlayerRanking.then((PlayerRanking) => {
-    res.send(PlayerRanking.slice(0, 10));
+  firebaseDatabase.then((response_teams) => {
+    res.send(response_teams[1]);
   });
 });
 

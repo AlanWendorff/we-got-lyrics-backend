@@ -3,7 +3,7 @@ const FirebaseConfig  = require('../config/FirebaseConfig');
 const registerAllTeams = (response) =>{
 
     const database = FirebaseConfig();
-    let pathsDatabase = database.ref('paths').once('value').then(function (snapshot) {
+    let pathsDatabase = database.ref('teams').once('value').then(function (snapshot) {
         let responseOfDatabase = snapshot.val();
         let pathsDatabase = Object.values(responseOfDatabase);
         return pathsDatabase;
@@ -42,7 +42,7 @@ const registerAllTeams = (response) =>{
         cleanTeam.map(team=> {
             let {id} = team;
             if (id !== undefined) {
-                database.ref().child('paths/'+id).set({
+                database.ref().child('teams/'+id).set({
                     "id" : team.id,
                     "img" : team.img,
                     "name" : team.name,

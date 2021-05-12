@@ -2,7 +2,7 @@ const FirebaseConfig  = require('../config/FirebaseConfig');
 
 const updateLogo = (concated) =>{
     const database = FirebaseConfig();
-    let pathsDatabase = database.ref('paths').once('value').then(function (snapshot) {
+    let pathsDatabase = database.ref('teams').once('value').then(function (snapshot) {
         let responseOfDatabase = snapshot.val();
         let pathsDatabase = Object.values(responseOfDatabase);
         return pathsDatabase;
@@ -19,7 +19,7 @@ const updateLogo = (concated) =>{
                         if (teamDatabase !== undefined) {
                             if (image_url !== null) {
                                 if (teamDatabase.img !== image_url) {
-                                    let query = database.ref().child('paths').orderByChild("id").equalTo(id);
+                                    let query = database.ref().child('teams').orderByChild("id").equalTo(id);
                                         query.once("child_added", function(snapshot) {
                                         snapshot.ref.update({ img: image_url })
                                     });
@@ -27,7 +27,7 @@ const updateLogo = (concated) =>{
                                 //console.log("la image url de api es null");
                             }
                             if (teamDatabase.name !== name) {
-                                let query = database.ref().child('paths').orderByChild("id").equalTo(id);
+                                let query = database.ref().child('teams').orderByChild("id").equalTo(id);
                                     query.once("child_added", function(snapshot) {
                                     snapshot.ref.update({ name: name })
                                 });
