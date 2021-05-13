@@ -15,7 +15,7 @@ const setNewTournament = (data) =>{
             let {league} = match;
             let {id, image_url, name} = league;
             if (image_url === null) {
-                image_url = "https://i.ibb.co/Hxy6gm2/csgo-Logo-Default.png";
+                image_url = "https://i.ibb.co/85J2B3C/csgo-Logo-Default-Black.png";
             }
             torneos.push(
             {
