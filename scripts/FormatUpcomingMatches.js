@@ -17,6 +17,8 @@ const formatUpcomingMatches = (apiUpcoming) => {
 
     if (match.number_of_games === 1) {
       bestOf = "Best of 1";
+    } else if (match.number_of_games === 2) {
+      bestOf = "Best of 2";
     } else if (match.number_of_games === 3) {
       bestOf = "Best of 3";
     } else if (match.number_of_games === 5) {
