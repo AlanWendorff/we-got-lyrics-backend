@@ -7,10 +7,7 @@ const formatUpcomingMatches = (apiUpcoming) => {
     let stage;
     let bestOf;
     if (match.name.includes(":")) {
-      stage = match.name.substring(
-        match.name.lastIndexOf(0),
-        match.name.lastIndexOf(":")
-      );
+      stage = match.name.substring(0, match.name.lastIndexOf(":"));
     } else {
       stage = match.tournament.name;
     }
@@ -43,23 +40,23 @@ const formatUpcomingMatches = (apiUpcoming) => {
       begin_at: match.begin_at,
       id: match.id,
       opponents: [
-        match.opponents[0] !== undefined &&{
+        match.opponents[0] !== undefined && {
           opponent: {
             id: match.opponents[0].opponent.id,
             name: match.opponents[0].opponent.name,
             image_url: match.opponents[0].opponent.image_url,
           },
         },
-        match.opponents[1] !== undefined&&{
+        match.opponents[1] !== undefined && {
           opponent: {
             id: match.opponents[1].opponent.id,
             name: match.opponents[1].opponent.name,
             image_url: match.opponents[1].opponent.image_url,
           },
-        }
+        },
       ],
       results: match.results,
-      official_stream_url: match.official_stream_url
+      official_stream_url: match.official_stream_url,
     });
   });
   return upcomingFormatted;

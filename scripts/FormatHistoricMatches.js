@@ -6,10 +6,7 @@ const formatHistoricMatches = (apiHistoric) => {
   historic.map((match) => {
     let stage;
     if (match.name.includes(":")) {
-      stage = match.name.substring(
-        match.name.lastIndexOf(0),
-        match.name.lastIndexOf(":")
-      );
+      stage = match.name.substring(0, match.name.lastIndexOf(":"));
     } else {
       stage = match.tournament.name;
     }
