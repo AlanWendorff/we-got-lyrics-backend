@@ -4,7 +4,7 @@ const axios  = require('axios');
 
 const callAPI = async (gameId) => {
     try {
-        let respuestaAPI = await axios.get(`https://api.pandascore.co/csgo/matches/${gameId}/players/stats?token=yVPKLDCsTsxGSJcEWb_gbzDiC6NSWVQ3thriZ3Qft_p6lGvLxPc`)
+        let respuestaAPI = await axios.get(`https://api.pandascore.co/csgo/matches/${gameId}/players/stats?token=${process.env.APIKEY_Y}`)
         let {data} = respuestaAPI;
         return data;
     } catch (error) {

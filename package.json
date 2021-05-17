@@ -14,7 +14,7 @@
     "body-parser": "^1.19.0",
     "colorthief": "^2.3.2",
     "cors": "^2.8.5",
-    "dotenv": "^8.2.0",
+    "dotenv": "^8.6.0",
     "express": "^4.17.1",
     "firebase": "^8.2.6",
     "hltv": "^2.24.2",

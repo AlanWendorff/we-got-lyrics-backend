@@ -4,20 +4,22 @@ const SteamAPI = require("steamapi");
 const steam = new SteamAPI("steam token");
 
 router.get("/", async (req, res) => {
-  /* steam.resolve("https://steamcommunity.com/profiles/76561198335782603")
-    .then((id) => {
-      return id;
+
+  let id = new Promise((resolve, reject) => {
+    steam.resolve("https://steamcommunity.com/profiles/76561198335782603").then((id) => {
+      resolve(id);
     })
-    .then((id) => {
-        let summary = steam.getUserSummary(id)
-        .then((summary) => {
-            return summary;
-        })
-        console.log(summary);
-    }) */
-  steam.getUserStats("76561198335782603","730").then((ress) => {
-    res.send(ress);
   });
+  console.log(id);
+  /* let summary = steam.getUserSummary(id).then((summary) => {
+    return summary;
+  }); */
+  
+
+  
+  /* steam.getUserStats("76561198335782603","730").then((ress) => {
+    res.send(ress);
+  }); */
 });
 
 module.exports = router;

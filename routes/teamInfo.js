@@ -12,13 +12,13 @@ const getColor = require("../scripts/ExtractColorOther");
 const callAPI = async (id) => {
   try {
     let apiHistoric = await axios.get(
-      `https://api.pandascore.co/csgo/matches/past?filter[opponent_id]=${id}&filter[finished]=true&token=yVPKLDCsTsxGSJcEWb_gbzDiC6NSWVQ3thriZ3Qft_p6lGvLxPc`
+      `https://api.pandascore.co/csgo/matches/past?filter[opponent_id]=${id}&filter[finished]=true&token=${process.env.APIKEY_Y}`
     );
     let apiUpcoming = await axios.get(
-      `https://api.pandascore.co/csgo/matches?sort=begin_at&filter[finished]=false&filter[unscheduled]=false&filter[opponent_id]=${id}&token=qMQof-eyYgmIhsESK2r67QvtlSRrKnIiPdSHY6vFX3qn3wIIuj4`
+      `https://api.pandascore.co/csgo/matches?sort=begin_at&filter[finished]=false&filter[unscheduled]=false&filter[opponent_id]=${id}&token=${process.env.APIKEY_Q}`
     );
     let apiRoster = await axios.get(
-      `https://api.pandascore.co/csgo/players?filter[team_id]=${id}&token=yVPKLDCsTsxGSJcEWb_gbzDiC6NSWVQ3thriZ3Qft_p6lGvLxPc`
+      `https://api.pandascore.co/csgo/players?filter[team_id]=${id}&token=${process.env.APIKEY_Y}`
     );
     
     let imageTeam;

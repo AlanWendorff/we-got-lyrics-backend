@@ -7,7 +7,7 @@ const formatTimeline = require("../scripts/FormatTimeline");
 const callAPI = async () => {
   try {
     let apiTimeline = await axios.get(
-      `https://api.pandascore.co/csgo/tournaments/upcoming?page[size]=100&token=yVPKLDCsTsxGSJcEWb_gbzDiC6NSWVQ3thriZ3Qft_p6lGvLxPc`
+      `https://api.pandascore.co/csgo/tournaments/upcoming?page[size]=100&token=${process.env.APIKEY_Y}`
     );
     return formatTimeline(apiTimeline);
   } catch (error) {

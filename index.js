@@ -27,8 +27,8 @@ app.use("/database/tournaments", require("./routes/databasetournaments"));
 app.use("/database/teams", require("./routes/databaseteams"));
 app.use("/database/searchteam", require("./routes/searchteam"));
 //app.use("/api/blogthreads", require("./routes/blogthreads"));
-app.use("/api/demo", require("./routes/demo"));
-//app.use("/api/steam", require("./routes/steamdemo"));
+//app.use("/api/demo", require("./routes/demo"));
+//app.use("/steam/userinfo", require("./routes/steamdemo"));
 //app.use("/api/csgonews", require("./routes/csgonews"));
 
 const PORT = process.env.PORT || 4000;

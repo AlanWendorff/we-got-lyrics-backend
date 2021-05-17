@@ -9,7 +9,7 @@ const updateLogo = require("../scripts/UpdateLogo");
 const callAPI = async () => {
   try {
     let apiUpcoming = await axios.get(
-      `https://api.pandascore.co/csgo/matches?sort=begin_at&filter[status]=not_started,running&token=qMQof-eyYgmIhsESK2r67QvtlSRrKnIiPdSHY6vFX3qn3wIIuj4`
+      `https://api.pandascore.co/csgo/matches?sort=begin_at&filter[status]=not_started,running&token=${process.env.APIKEY_Q}`
     );
     return formatUpcomingMatches(apiUpcoming);
   } catch (error) {
