@@ -6,6 +6,7 @@ const formatUpcomingMatches = require("../scripts/FormatUpcomingMatches");
 const registerAllTeams = require("../scripts/FirebaseRegisterAllTeams");
 const Laderboard = require("../scripts/Laderboard");
 const updateLogo = require("../scripts/UpdateLogo");
+const getColor = require("../scripts/ExtractColorOther");
 
 const callAPI = async (id) => {
   try {
@@ -26,6 +27,7 @@ const callAPI = async (id) => {
       upcomingMatches: formatUpcomingMatches(apiUpcoming),
       ladder: ladder,
       imageLeague: imageLeague,
+      colors: await getColor(imageLeague),
     };
   } catch (error) {
     console.log(error);

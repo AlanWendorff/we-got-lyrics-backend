@@ -7,6 +7,7 @@ const formatUpcomingMatches = require("../scripts/FormatUpcomingMatches");
 const updateLogo = require("../scripts/UpdateLogo");
 const registerTeam = require("../scripts/FirebaseRegisterTeam");
 const setNewTournament = require("../scripts/FirebaseSetNewTournament");
+const getColor = require("../scripts/ExtractColorOther");
 
 const callAPI = async (id) => {
   try {
@@ -57,7 +58,6 @@ const callAPI = async (id) => {
         }
       }
     }
-
     return {
       historicMatches: formatHistoricMatches(apiHistoric),
       upcomingMatches: formatUpcomingMatches(apiUpcoming),
@@ -66,6 +66,7 @@ const callAPI = async (id) => {
       winRate: winRate,
       wl: wl,
       imageTeam: imageTeam,
+      colors: await getColor(imageTeam),
     };
   } catch (error) {
     console.log(error);
