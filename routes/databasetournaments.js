@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const FirebaseConfig = require("../config/FirebaseConfig");
-const getColor = require("../scripts/ExtractColorOther");
 
 router.get("/", async (req, res) => {
   const database = FirebaseConfig();
@@ -13,22 +12,16 @@ router.get("/", async (req, res) => {
       return responseOfDatabase;
     });
 
-  pathsDatabase.then(async (pathsDatabase) => {
+  pathsDatabase.then((pathsDatabase) => {
     let T = Object.values(pathsDatabase);
-
-    let tournaments = await Promise.all(
-      T.map(async (tournament) => {
-        let colors = await getColor(tournament.image_url)
-        return {
-          id: tournament.id,
-          image_url: tournament.image_url,
-          name: tournament.name,
-          colors: {
-            DarkVibrant: colors.DarkVibrant,
-          },
-        };
-      })
-    );
+    let tournaments = T.map((tournament) => ({
+      id: tournament.id,
+      image_url: tournament.image_url,
+      name: tournament.name,
+      colors: {
+        DarkVibrant: tournament.colors.DarkVibrant,
+      },
+    }));
     res.send(tournaments);
   });
 });

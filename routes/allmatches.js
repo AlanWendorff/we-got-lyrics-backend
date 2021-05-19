@@ -5,24 +5,36 @@ const formatUpcomingMatches = require("../scripts/FormatUpcomingMatches");
 const setNewTournament = require("../scripts/FirebaseSetNewTournament");
 const registerAllTeams = require("../scripts/FirebaseRegisterAllTeams");
 const updateLogo = require("../scripts/UpdateLogo");
+const FirebaseConfig = require("../config/FirebaseConfig");
 
-const callAPI = async () => {
+const callAPI = async (database) => {
   try {
     let apiUpcoming = await axios.get(
       `https://api.pandascore.co/csgo/matches?sort=begin_at&filter[status]=not_started,running&token=${process.env.APIKEY_Q}`
     );
-    return formatUpcomingMatches(apiUpcoming);
+    return formatUpcomingMatches(apiUpcoming, database);
   } catch (error) {
     console.log(error);
   }
 };
 
-router.get("/", async (req, res) => {
-  let response = await callAPI();
-  res.send(response);
-  setNewTournament(response);
-  registerAllTeams(response);
-  updateLogo(response);
+router.get("/", (req, res) => {
+  const database = FirebaseConfig();
+  let DATABASE = database
+    .ref()
+    .once("value")
+    .then(function (snapshot) {
+      let responseOfDatabase = snapshot.val();
+      return responseOfDatabase;
+    });
+  DATABASE.then(async (DATABASE) => {
+    let database = Object.values(DATABASE);
+    let response = await callAPI(database);
+    res.send(response);
+    setNewTournament(response);
+    registerAllTeams(response);
+    updateLogo(response);
+  });
 });
 
 module.exports = router;

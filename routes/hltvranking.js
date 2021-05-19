@@ -14,58 +14,54 @@ router.get("/", (req, res) => {
       return responseDatabase;
     });
 
-  let rank = firebaseDatabase.then(async (responseDatabase) => {
+  let rank = firebaseDatabase.then((responseDatabase) => {
     let HLTVRANKING = responseDatabase[0];
     let TEAMS = Object.values(responseDatabase[1]);
+    let ranking = [];
+    HLTVRANKING.map((team) => {
+      let { TEXT_RANKING } = team;
+      let [
+        positionUnformatted,
+        orgUnformatted,
+        rosterUnformatted,
+        balanceUnformatted,
+      ] = TEXT_RANKING.split("\n \n");
+      let positionFormatted = positionUnformatted.replace("#", "");
+      let pointsFormatted = orgUnformatted
+        .substring(
+          orgUnformatted.lastIndexOf("("),
+          orgUnformatted.lastIndexOf(")")
+        )
+        .replace("(", "")
+        .replace(" points", "");
+      let nameFormatted = orgUnformatted
+        .replace("(", "")
+        .replace(")", "")
+        .replace(" points", "")
+        .replace(" ", "")
+        .replace(pointsFormatted, "");
 
-    let ranking = await Promise.all(
-      HLTVRANKING.map(async (team) => {
-        let { TEXT_RANKING } = team;
-        let [
-          positionUnformatted,
-          orgUnformatted,
-          rosterUnformatted,
-          balanceUnformatted,
-        ] = TEXT_RANKING.split("\n \n");
-        let positionFormatted = positionUnformatted.replace("#", "");
-        let pointsFormatted = orgUnformatted
-          .substring(
-            orgUnformatted.lastIndexOf("("),
-            orgUnformatted.lastIndexOf(")")
-          )
-          .replace("(", "")
-          .replace(" points", "");
-        let nameFormatted = orgUnformatted
-          .replace("(", "")
-          .replace(")", "")
-          .replace(" points", "")
-          .replace(" ", "")
-          .replace(pointsFormatted, "");
-
-        let rosterFormatted = rosterUnformatted.split("\n");
-        let balanceFormatted = balanceUnformatted
-          .split("\n\n")[1]
-          .replace(" ", "");
-        let teamInDatabase = TEAMS.find(
-          (element) =>
-            element.name.toLowerCase() === nameFormatted.toLowerCase()
-        );
-        let colors = await getColor(teamInDatabase.img);
-        return {
-          position: parseInt(positionFormatted),
-          name: nameFormatted,
-          img: teamInDatabase.img,
-          id: teamInDatabase.id,
-          points: parseInt(pointsFormatted),
-          roster: rosterFormatted,
-          balance: balanceFormatted,
-          colors: {
-            DarkVibrant: colors.DarkVibrant,
-            Vibrant: colors.Vibrant,
-          },
-        };
-      })
-    );
+      let rosterFormatted = rosterUnformatted.split("\n");
+      let balanceFormatted = balanceUnformatted
+        .split("\n\n")[1]
+        .replace(" ", "");
+      let teamInDatabase = TEAMS.find(
+        (element) => element.name.toLowerCase() === nameFormatted.toLowerCase()
+      );
+      ranking.push ({
+        position: parseInt(positionFormatted),
+        name: nameFormatted,
+        img: teamInDatabase.img,
+        id: teamInDatabase.id,
+        points: parseInt(pointsFormatted),
+        roster: rosterFormatted,
+        balance: balanceFormatted,
+        colors: {
+          DarkVibrant: teamInDatabase.colors.DarkVibrant,
+          Vibrant: teamInDatabase.colors.Vibrant,
+        },
+      });
+    });
     return ranking;
   });
 

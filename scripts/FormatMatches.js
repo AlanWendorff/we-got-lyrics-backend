@@ -1,7 +1,11 @@
-const formatHistoricMatches = async (apiHistoric, database) => {
-  let historicFormatted = [];
-  let historic = apiHistoric.data.filter((match) => match.winner !== null);
-  historic.map((match) => {
+const FormatMatches = (matches, database, filterByWinner) => {
+  let MATCHES_FORMATTED = [];
+  let MATCHES = matches.data.filter((status) => status.status !== "canceled");
+  MATCHES = filterByWinner
+    ? MATCHES.filter((match) => match.winner !== null)
+    : MATCHES;
+
+  MATCHES.map((match) => {
     let stage;
     let bestOf;
     if (match.name.includes(":")) {
@@ -9,7 +13,7 @@ const formatHistoricMatches = async (apiHistoric, database) => {
     } else {
       stage = match.tournament.name;
     }
-    
+
     if (match.number_of_games === 1) {
       bestOf = "Best of 1";
     } else if (match.number_of_games === 2) {
@@ -19,6 +23,7 @@ const formatHistoricMatches = async (apiHistoric, database) => {
     } else if (match.number_of_games === 5) {
       bestOf = "Best of 5";
     }
+
     let colorsLeague = Object.values(database[2]).find(
       (element) => element.id === match.league.id
     );
@@ -33,33 +38,36 @@ const formatHistoricMatches = async (apiHistoric, database) => {
         (element) => element.id === match.opponents[1].opponent.id
       );
 
-    historicFormatted.push({
+    MATCHES_FORMATTED.push({
       status: match.status,
-      official_stream_url: match.official_stream_url,
-      winner: {
-        name: match.winner.name,
-        image_url: match.winner.image_url,
-        id: match.winner.id,
-      },
       stage: stage,
       bestOf: bestOf,
       league: {
         image_url: match.league.image_url,
         name: match.league.name,
         id: match.league.id,
-        colors: {
-          LightVibrant: colorsLeague.LightVibrant,
-          Vibrant: colorsLeague.Vibrant,
-          DarkVibrant: colorsLeague.DarkVibrant,
-        },
+        colors: colorsLeague? {
+          LightVibrant: colorsLeague.colors.LightVibrant,
+          Vibrant: colorsLeague.colors.Vibrant,
+          DarkVibrant: colorsLeague.colors.DarkVibrant,
+        }:
+        {
+            LightVibrant: "#455a64",
+            Vibrant: "#455a64",
+            DarkVibrant: "#455a64",
+          }
+        ,
       },
       serie: {
         full_name: match.serie.full_name,
       },
+      tournament: {
+        league_id: match.tournament.league_id,
+      },
       begin_at: match.begin_at,
       id: match.id,
       opponents: [
-        {
+        match.opponents[0] !== undefined && {
           opponent: {
             id: match.opponents[0].opponent.id,
             name: match.opponents[0].opponent.name,
@@ -72,7 +80,7 @@ const formatHistoricMatches = async (apiHistoric, database) => {
             },
           },
         },
-        {
+        match.opponents[1] !== undefined && {
           opponent: {
             id: match.opponents[1].opponent.id,
             name: match.opponents[1].opponent.name,
@@ -87,9 +95,10 @@ const formatHistoricMatches = async (apiHistoric, database) => {
         },
       ],
       results: match.results,
+      official_stream_url: match.official_stream_url,
     });
   });
-  return historicFormatted;
+  return MATCHES_FORMATTED;
 };
 
-module.exports = formatHistoricMatches;
+module.exports = FormatMatches;

@@ -1,4 +1,4 @@
-const formatUpcomingMatches = (apiUpcoming) => {
+const formatUpcomingMatches = (apiUpcoming, database) => {
   let upcomingFormatted = [];
   let upcoming = apiUpcoming.data.filter(
     (status) => status.status !== "canceled"
@@ -21,6 +21,16 @@ const formatUpcomingMatches = (apiUpcoming) => {
     } else if (match.number_of_games === 5) {
       bestOf = "Best of 5";
     }
+    
+    let colorsLeague = Object.values(database[2]).find(
+      (element) => element.id === match.league.id
+    );
+    let colorsTeamA = match.opponents[0] !== undefined && Object.values(database[1]).find(
+      (element) => element.id === match.opponents[0].opponent.id
+    );
+    let colorsTeamB = match.opponents[1] !== undefined && Object.values(database[1]).find(
+      (element) => element.id === match.opponents[1].opponent.id
+    );
 
     upcomingFormatted.push({
       status: match.status,
@@ -30,6 +40,11 @@ const formatUpcomingMatches = (apiUpcoming) => {
         image_url: match.league.image_url,
         name: match.league.name,
         id: match.league.id,
+        colors: {
+          LightVibrant: colorsLeague.colors.LightVibrant,
+          Vibrant: colorsLeague.colors.Vibrant,
+          DarkVibrant: colorsLeague.colors.DarkVibrant,
+        }
       },
       serie: {
         full_name: match.serie.full_name,
@@ -45,6 +60,9 @@ const formatUpcomingMatches = (apiUpcoming) => {
             id: match.opponents[0].opponent.id,
             name: match.opponents[0].opponent.name,
             image_url: match.opponents[0].opponent.image_url,
+            colors: {
+              DarkVibrant: colorsTeamA !== undefined&& colorsTeamA.colors !== undefined? colorsTeamA.colors.DarkVibrant : "#455a64",
+            },
           },
         },
         match.opponents[1] !== undefined && {
@@ -52,6 +70,9 @@ const formatUpcomingMatches = (apiUpcoming) => {
             id: match.opponents[1].opponent.id,
             name: match.opponents[1].opponent.name,
             image_url: match.opponents[1].opponent.image_url,
+            colors: {
+              DarkVibrant: colorsTeamB !== undefined&& colorsTeamB.colors !== undefined? colorsTeamB.colors.DarkVibrant : "#455a64",
+            },
           },
         },
       ],

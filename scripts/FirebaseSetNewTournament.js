@@ -1,4 +1,5 @@
 const FirebaseConfig  = require('../config/FirebaseConfig');
+const getColor = require("../scripts/ExtractColorOther");
 
 const setNewTournament = (data) =>{
     const database = FirebaseConfig();
@@ -9,15 +10,14 @@ const setNewTournament = (data) =>{
     }); 
 
     torneosDatabase.then(torneosDatabase => {
-        let torneos = [];
         let matchesFiltered = data.filter(status => status.status !== "canceled");
-        matchesFiltered.map(match => {
+        let torneos = matchesFiltered.map(match => {
             let {league} = match;
             let {id, image_url, name} = league;
             if (image_url === null) {
                 image_url = "https://i.ibb.co/85J2B3C/csgo-Logo-Default-Black.png";
             }
-            torneos.push(
+            return(
             {
                 "id" : id,
                 "image_url" : image_url,
@@ -33,14 +33,14 @@ const setNewTournament = (data) =>{
             }
         }
         let onlyInB = torneos.filter(comparer(torneosDatabase));
-        
         let cleanTournaments = onlyInB.filter((v,i,a)=>a.findIndex(t=>(t.id === v.id))===i);
-        //console.log(cleanTournaments);
-        cleanTournaments.map(tournament=> {
+        cleanTournaments.map( async (tournament) => {
+            let colors = tournament.image_url !== "https://i.ibb.co/85J2B3C/csgo-Logo-Default-Black.png" && await getColor(tournament.image_url)
             database.ref().child('tournament/'+tournament.id).set({
                 "id" : tournament.id,
                 "image_url" : tournament.image_url,
                 "name" : tournament.name,
+                "colors": colors,
             });
         })
     });

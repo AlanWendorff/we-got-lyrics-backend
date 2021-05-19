@@ -1,7 +1,7 @@
 const FirebaseConfig  = require('../config/FirebaseConfig');
+const getColor = require("../scripts/ExtractColorOther");
 
 const registerAllTeams = (response) =>{
-
     const database = FirebaseConfig();
     let pathsDatabase = database.ref('teams').once('value').then(function (snapshot) {
         let responseOfDatabase = snapshot.val();
@@ -39,13 +39,15 @@ const registerAllTeams = (response) =>{
         }
         let onlyInB = teams.filter(comparer(pathsDatabase));
         let cleanTeam = onlyInB.filter((v,i,a)=>a.findIndex(t=>(t.id === v.id))===i);
-        cleanTeam.map(team=> {
+        cleanTeam.map(async (team)=> {
+            let colors = team.img !== "https://i.ibb.co/85J2B3C/csgo-Logo-Default-Black.png" && await getColor(team.img)
             let {id} = team;
             if (id !== undefined) {
                 database.ref().child('teams/'+id).set({
                     "id" : team.id,
                     "img" : team.img,
                     "name" : team.name,
+                    "colors": colors,
                 });
             }
         })

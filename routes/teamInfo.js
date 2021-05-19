@@ -1,15 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const axios = require("axios");
-const formatHistoricMatches = require("../scripts/FormatHistoricMatches");
+const FormatMatches = require("../scripts/FormatMatches");
 const formatRoster = require("../scripts/FormatRoster");
-const formatUpcomingMatches = require("../scripts/FormatUpcomingMatches");
-const updateLogo = require("../scripts/UpdateLogo");
-const registerTeam = require("../scripts/FirebaseRegisterTeam");
 const setNewTournament = require("../scripts/FirebaseSetNewTournament");
-const getColor = require("../scripts/ExtractColorOther");
+const FirebaseConfig = require("../config/FirebaseConfig");
 
-const callAPI = async (id) => {
+const callAPI = async (id, database) => {
   try {
     let apiHistoric = await axios.get(
       `https://api.pandascore.co/csgo/matches/past?filter[opponent_id]=${id}&filter[finished]=true&token=${process.env.APIKEY_Y}`
@@ -20,21 +17,20 @@ const callAPI = async (id) => {
     let apiRoster = await axios.get(
       `https://api.pandascore.co/csgo/players?filter[team_id]=${id}&token=${process.env.APIKEY_Y}`
     );
-    
+
     let imageTeam;
     let winStrike = 0;
     let winRate = 0;
     let wl = [];
     let matchWin = 0;
-    let lastMatch = apiHistoric.data[0];
-
-    if (lastMatch.opponents[0].opponent.id === parseInt(id)) {
-      imageTeam = lastMatch.opponents[0].opponent.image_url;
-    } else {
-      imageTeam = lastMatch.opponents[1].opponent.image_url;
-    }
+    let lastMatch = apiHistoric.data[0] ? apiHistoric.data[0] : undefined;
 
     if (lastMatch) {
+      if (lastMatch.opponents[0].opponent.id === parseInt(id)) {
+        imageTeam = lastMatch.opponents[0].opponent.image_url;
+      } else {
+        imageTeam = lastMatch.opponents[1].opponent.image_url;
+      }
       for (let i = 0; i < apiHistoric.data.length; i++) {
         if (apiHistoric.data[i].winner_id === parseInt(id)) {
           matchWin = matchWin + 1;
@@ -58,15 +54,27 @@ const callAPI = async (id) => {
         }
       }
     }
+    let colorsTeam = Object.values(database[1]).find(
+      (element) => element.id === parseInt(id)
+    ).colors ?? {
+      DarkMuted: "#1c313a",
+      DarkVibrant: "#455a64",
+      LightMuted: "#455a64",
+      LightVibrant: "#718792",
+      Muted: "#1c313a",
+      Vibrant: "#718792",
+    };
+    console.log(colorsTeam);
+    const filterByWinner = true;
     return {
-      historicMatches: formatHistoricMatches(apiHistoric),
-      upcomingMatches: formatUpcomingMatches(apiUpcoming),
+      historicMatches: FormatMatches(apiHistoric, database, filterByWinner),
+      upcomingMatches: FormatMatches(apiUpcoming, database),
       roster: formatRoster(apiRoster),
       winStrike: winStrike,
       winRate: winRate,
       wl: wl,
       imageTeam: imageTeam,
-      colors: await getColor(imageTeam),
+      colors: colorsTeam,
     };
   } catch (error) {
     console.log(error);
@@ -74,13 +82,22 @@ const callAPI = async (id) => {
 };
 
 router.get("/:id", async (req, res) => {
+  const database = FirebaseConfig();
+  let DATABASE = database
+    .ref()
+    .once("value")
+    .then(function (snapshot) {
+      let responseOfDatabase = snapshot.val();
+      return responseOfDatabase;
+    });
   let id = req.params.id;
-  let response = await callAPI(id);
-  res.send(response);
-  let concated = [...response.historicMatches, ...response.upcomingMatches];
-  updateLogo(concated);
-  registerTeam(concated, id);
-  setNewTournament(response.upcomingMatches);
+
+  DATABASE.then(async (DATABASE) => {
+    let database = Object.values(DATABASE);
+    let response = await callAPI(id, database);
+    res.send(response);
+    setNewTournament(response.historicMatches);
+  });
 });
 
 module.exports = router;
