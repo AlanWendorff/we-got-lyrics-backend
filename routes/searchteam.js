@@ -4,7 +4,7 @@ const FirebaseConfig = require("../config/FirebaseConfig");
 const database = FirebaseConfig();
 
 router.get("/:team", (req, res) => {
-  let team = req.params.team;
+  let TEAM = req.params.team;
   let teamsDatabase = database
     .ref("teams")
     .once("value")
@@ -15,7 +15,7 @@ router.get("/:team", (req, res) => {
     let TEAMS = Object.values(teamsDatabase)
     let filteredTeams = []
     TEAMS.map((equipo) => {
-      if (equipo.name.toLowerCase().startsWith(team)) {
+      if (equipo.name.toLowerCase().startsWith(TEAM)) {
         filteredTeams.push({
           id: equipo.id,
           name: equipo.name,

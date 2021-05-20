@@ -1,5 +1,6 @@
 const Laderboard = (apiHistoric) => {
-  let AllTeams = apiHistoric.data.map((match) => {
+  let MATCHES = apiHistoric.data.filter((match) => match.winner !== null);
+  let AllTeams = MATCHES.map((match) => {
     let { winner } = match;
     if (winner !== null) {
       return {
