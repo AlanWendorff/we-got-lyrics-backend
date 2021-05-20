@@ -1,8 +1,8 @@
 const FirebaseConfig  = require('../../config/FirebaseConfig');
 const getColor = require("../Helpers/ExtractColorOther");
+const database = FirebaseConfig();
 
 const setNewTournament = (data) =>{
-    const database = FirebaseConfig();
     let torneosDatabase = database.ref('tournament').once('value').then(function (snapshot) {
         let responseOfDatabase = snapshot.val();
         let torneosDatabase = Object.values(responseOfDatabase);

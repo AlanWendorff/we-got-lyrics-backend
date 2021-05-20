@@ -1,5 +1,5 @@
 const formatTimeline = (apiTimeline, database) => {
-  const timeline = apiTimeline.data.filter((date) => date.begin_at !== null);
+  let timeline = apiTimeline.data.filter((date) => date.begin_at !== null);
 
   let timelineFormatted = timeline.map((tournament) => {
     let colorsLeague = Object.values(database).find(

@@ -1,8 +1,8 @@
 const FirebaseConfig = require("../../config/FirebaseConfig");
 const getColor = require("../Helpers/ExtractColorOther");
+const database = FirebaseConfig();
 
 const updateLogo = (concated) => {
-  const database = FirebaseConfig();
   let pathsDatabase = database
     .ref("teams")
     .once("value")

@@ -1,8 +1,8 @@
 const FirebaseConfig  = require('../../config/FirebaseConfig');
 const getColor = require("../Helpers/ExtractColorOther");
+const database = FirebaseConfig();
 
 const registerTeam = (concated, id) =>{
-    const database = FirebaseConfig();
     let pathsDatabase = database.ref('teams').once('value').then(function (snapshot) {
         let responseOfDatabase = snapshot.val();
         let pathsDatabase = Object.values(responseOfDatabase);

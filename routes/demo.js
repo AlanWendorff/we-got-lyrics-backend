@@ -1,9 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const FirebaseConfig = require("../config/FirebaseConfig");
-
+const database = FirebaseConfig();
 router.get("/", async (req, res) => {
-  const database = FirebaseConfig();
   let pathsDatabase = database
     .ref()
     .once("value")
