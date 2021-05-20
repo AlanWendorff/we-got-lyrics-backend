@@ -1,19 +1,18 @@
 const express = require("express");
 const router = express.Router();
 const FirebaseConfig = require("../config/FirebaseConfig");
+const database = FirebaseConfig();
 
-router.get("/", async (req, res) => {
-  const database = FirebaseConfig();
-  let pathsDatabase = database
+router.get("/", (req, res) => {
+  let TOURNAMENTS_DATABASE = database
     .ref("tournament")
     .once("value")
     .then(function (snapshot) {
-      let responseOfDatabase = snapshot.val();
-      return responseOfDatabase;
+      return snapshot.val()
     });
 
-  pathsDatabase.then((pathsDatabase) => {
-    let T = Object.values(pathsDatabase);
+    TOURNAMENTS_DATABASE.then((TOURNAMENTS_DATABASE) => {
+    let T = Object.values(TOURNAMENTS_DATABASE);
     let tournaments = T.map((tournament) => ({
       id: tournament.id,
       image_url: tournament.image_url,

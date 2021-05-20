@@ -1,8 +1,6 @@
 const formatRoster = (apiRoster) => {
-  let rosterFormatted = [];
-
-  apiRoster.data.map((player) => {
-    rosterFormatted.push({
+  let rosterFormatted = apiRoster.data.map((player) => {
+    return({
       nationality: player.nationality,
       image_url: player.image_url,
       name: player.name,

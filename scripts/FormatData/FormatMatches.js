@@ -1,11 +1,10 @@
 const FormatMatches = (matches, database, filterByWinner) => {
-  let MATCHES_FORMATTED = [];
   let MATCHES = matches.data.filter((status) => status.status !== "canceled");
   MATCHES = filterByWinner
     ? MATCHES.filter((match) => match.winner !== null)
     : MATCHES;
 
-  MATCHES.map((match) => {
+  let MATCHES_FORMATTED = MATCHES.map((match) => {
     let stage;
     let bestOf;
     if (match.name.includes(":")) {
@@ -38,7 +37,7 @@ const FormatMatches = (matches, database, filterByWinner) => {
         (element) => element.id === match.opponents[1].opponent.id
       );
 
-    MATCHES_FORMATTED.push({
+    return {
       status: match.status,
       stage: stage,
       bestOf: bestOf,
@@ -46,17 +45,17 @@ const FormatMatches = (matches, database, filterByWinner) => {
         image_url: match.league.image_url,
         name: match.league.name,
         id: match.league.id,
-        colors: colorsLeague? {
-          LightVibrant: colorsLeague.colors.LightVibrant,
-          Vibrant: colorsLeague.colors.Vibrant,
-          DarkVibrant: colorsLeague.colors.DarkVibrant,
-        }:
-        {
-            LightVibrant: "#455a64",
-            Vibrant: "#455a64",
-            DarkVibrant: "#455a64",
-          }
-        ,
+        colors: colorsLeague
+          ? {
+              LightVibrant: colorsLeague.colors.LightVibrant,
+              Vibrant: colorsLeague.colors.Vibrant,
+              DarkVibrant: colorsLeague.colors.DarkVibrant,
+            }
+          : {
+              LightVibrant: "#455a64",
+              Vibrant: "#455a64",
+              DarkVibrant: "#455a64",
+            },
       },
       serie: {
         full_name: match.serie.full_name,
@@ -96,7 +95,7 @@ const FormatMatches = (matches, database, filterByWinner) => {
       ],
       results: match.results,
       official_stream_url: match.official_stream_url,
-    });
+    };
   });
   return MATCHES_FORMATTED;
 };

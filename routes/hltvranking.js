@@ -1,24 +1,21 @@
 const express = require("express");
 const router = express.Router();
 const FirebaseConfig = require("../config/FirebaseConfig");
-const getColor = require("../scripts/ExtractColorOther");
+const database = FirebaseConfig();
 
 router.get("/", (req, res) => {
-  const database = FirebaseConfig();
   let firebaseDatabase = database
     .ref()
     .once("value")
     .then(function (snapshot) {
       let responseOfDatabase = snapshot.val();
-      let responseDatabase = Object.values(responseOfDatabase);
-      return responseDatabase;
+      return Object.values(responseOfDatabase);
     });
 
   let rank = firebaseDatabase.then((responseDatabase) => {
     let HLTVRANKING = responseDatabase[0];
     let TEAMS = Object.values(responseDatabase[1]);
-    let ranking = [];
-    HLTVRANKING.map((team) => {
+    let ranking = HLTVRANKING.map((team) => {
       let { TEXT_RANKING } = team;
       let [
         positionUnformatted,
@@ -48,7 +45,7 @@ router.get("/", (req, res) => {
       let teamInDatabase = TEAMS.find(
         (element) => element.name.toLowerCase() === nameFormatted.toLowerCase()
       );
-      ranking.push ({
+      return {
         position: parseInt(positionFormatted),
         name: nameFormatted,
         img: teamInDatabase.img,
@@ -60,7 +57,7 @@ router.get("/", (req, res) => {
           DarkVibrant: teamInDatabase.colors.DarkVibrant,
           Vibrant: teamInDatabase.colors.Vibrant,
         },
-      });
+      };
     });
     return ranking;
   });

@@ -1,11 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const axios = require("axios");
-const formatTimeline = require("../scripts/FormatTimeline");
+const formatTimeline = require("../scripts/FormatData/FormatTimeline");
 const FirebaseConfig = require("../config/FirebaseConfig");
-const setNewTournament = require("../scripts/FirebaseSetNewTournament");
-///upcoming .filter(live => live.live_supported !== false);
-//.sort(function(a,b){ return new Date(a.begin_at) - new Date(b.begin_at)}).filter(seriewin => seriewin.serie.winner_id === null).filter(win => win.winner_id === null);
+const database = FirebaseConfig();
 const callAPI = async (database) => {
   try {
     let apiTimeline = await axios.get(
@@ -17,14 +15,12 @@ const callAPI = async (database) => {
   }
 };
 
-router.get("/", async (req, res) => {
-  const database = FirebaseConfig();
+router.get("/", (req, res) => {
   let DATABASE = database
-    .ref('tournament')
+    .ref("tournament")
     .once("value")
     .then(function (snapshot) {
-      let responseOfDatabase = snapshot.val();
-      return responseOfDatabase;
+      return snapshot.val();
     });
   DATABASE.then(async (DATABASE) => {
     let database = Object.values(DATABASE);

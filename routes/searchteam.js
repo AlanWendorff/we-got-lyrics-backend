@@ -1,22 +1,26 @@
 const express = require("express");
 const router = express.Router();
 const FirebaseConfig = require("../config/FirebaseConfig");
+const database = FirebaseConfig();
 
-router.get("/:team", async (req, res) => {
+router.get("/:team", (req, res) => {
   let team = req.params.team;
-  const database = FirebaseConfig();
   let teamsDatabase = database
     .ref("teams")
     .once("value")
     .then(function (snapshot) {
-      let responseOfDatabase = snapshot.val();
-      return responseOfDatabase;
+      return snapshot.val();
     });
   teamsDatabase.then((teamsDatabase) => {
-    let filteredTeams = [];
-    Object.values(teamsDatabase).map((equipo) => {
+    let TEAMS = Object.values(teamsDatabase)
+    let filteredTeams = []
+    TEAMS.map((equipo) => {
       if (equipo.name.toLowerCase().startsWith(team)) {
-        filteredTeams.push(equipo);
+        filteredTeams.push({
+          id: equipo.id,
+          name: equipo.name,
+          img: equipo.img
+        });
       }
       return null;
     });

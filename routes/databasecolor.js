@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const FirebaseConfig = require("../config/FirebaseConfig");
-const getColor = require("../scripts/ExtractColorOther");
+const getColor = require("../scripts/Helpers/ExtractColorOther");
 
 router.get("/", async (req, res) => {
   const database = FirebaseConfig();

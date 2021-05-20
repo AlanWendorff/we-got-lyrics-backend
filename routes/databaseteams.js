@@ -1,15 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const FirebaseConfig = require("../config/FirebaseConfig");
-
-router.get("/", async (req, res) => {
-  const database = FirebaseConfig();
+const database = FirebaseConfig();
+router.get("/", (req, res) => {
   let pathsDatabase = database
     .ref("teams")
     .once("value")
     .then(function (snapshot) {
-      let responseOfDatabase = snapshot.val();
-      return responseOfDatabase;
+      return snapshot.val();
     });
   pathsDatabase.then((pathsDatabase) => {
     res.send(Object.values(pathsDatabase));

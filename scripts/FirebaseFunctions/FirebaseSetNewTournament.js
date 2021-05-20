@@ -1,5 +1,5 @@
-const FirebaseConfig  = require('../config/FirebaseConfig');
-const getColor = require("../scripts/ExtractColorOther");
+const FirebaseConfig  = require('../../config/FirebaseConfig');
+const getColor = require("../Helpers/ExtractColorOther");
 
 const setNewTournament = (data) =>{
     const database = FirebaseConfig();

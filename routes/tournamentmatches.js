@@ -1,11 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const axios = require("axios");
-const FormatMatches = require("../scripts/FormatMatches");
-const registerAllTeams = require("../scripts/FirebaseRegisterAllTeams");
-const Laderboard = require("../scripts/Laderboard");
-const updateLogo = require("../scripts/UpdateLogo");
+const FormatMatches = require("../scripts/FormatData/FormatMatches");
+const registerAllTeams = require("../scripts/FirebaseFunctions/FirebaseRegisterAllTeams");
+const Laderboard = require("../scripts/Helpers/Laderboard");
+const updateLogo = require("../scripts/FirebaseFunctions/UpdateLogo");
 const FirebaseConfig = require("../config/FirebaseConfig");
+const database = FirebaseConfig();
 
 const callAPI = async (id, database) => {
   try {
@@ -24,9 +25,8 @@ const callAPI = async (id, database) => {
     let colorsLeague = Object.values(database[2]).find(
       (element) => element.id === parseInt(id)
     );
-    const filterByWinner = true;
     return {
-      historicMatches: FormatMatches(apiHistoric, database, filterByWinner),
+      historicMatches: FormatMatches(apiHistoric, database, true),
       upcomingMatches: FormatMatches(apiUpcoming, database),
       ladder: ladder,
       imageLeague: imageLeague,
@@ -37,14 +37,12 @@ const callAPI = async (id, database) => {
   }
 };
 
-router.get("/:id", async (req, res) => {
-  const database = FirebaseConfig();
+router.get("/:id", (req, res) => {
   let DATABASE = database
     .ref()
     .once("value")
     .then(function (snapshot) {
-      let responseOfDatabase = snapshot.val();
-      return responseOfDatabase;
+      return snapshot.val();
     });
   let id = req.params.id;
   

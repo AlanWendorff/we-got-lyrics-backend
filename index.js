@@ -21,7 +21,6 @@ app.use("/api/hltvranking", require("./routes/hltvranking"));
 app.use("/api/news", require("./routes/news"));
 app.use("/api/playerinfo", require("./routes/playerinfo"));
 app.use("/database/tournaments", require("./routes/databasetournaments"));
-app.use("/database/teams", require("./routes/databaseteams"));
 app.use("/database/searchteam", require("./routes/searchteam"));
 
 const PORT = process.env.PORT || 4000;

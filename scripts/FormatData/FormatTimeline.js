@@ -1,12 +1,11 @@
-const formatTimeline = async (apiTimeline, database) => {
+const formatTimeline = (apiTimeline, database) => {
   const timeline = apiTimeline.data.filter((date) => date.begin_at !== null);
-  let timelineFormatted = [];
-  timeline.map((tournament) => {
+
+  let timelineFormatted = timeline.map((tournament) => {
     let colorsLeague = Object.values(database).find(
       (element) => element.id === tournament.league.id
     );
-
-    timelineFormatted.push({
+    return {
       begin_at: tournament.begin_at,
       league_id: tournament.league_id,
       league: {
@@ -18,12 +17,12 @@ const formatTimeline = async (apiTimeline, database) => {
         tier: tournament.serie.tier,
       },
       name: tournament.name,
-      teams: tournament.teams,
+      teams: tournament.teams.map((team) => {return({id: team.id, image_url: team.image_url, name: team.name})}),
       prizepool: tournament.prizepool,
       colors: {
         DarkVibrant: colorsLeague ? colorsLeague.colors.DarkVibrant : "#455a64",
       },
-    });
+    };
   });
   return timelineFormatted;
 };

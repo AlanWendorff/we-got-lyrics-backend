@@ -1,10 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const axios = require("axios");
-const FormatMatches = require("../scripts/FormatMatches");
-const formatRoster = require("../scripts/FormatRoster");
-const setNewTournament = require("../scripts/FirebaseSetNewTournament");
+const FormatMatches = require("../scripts/FormatData/FormatMatches");
+const formatRoster = require("../scripts/FormatData/FormatRoster");
+const setNewTournament = require("../scripts/FirebaseFunctions/FirebaseSetNewTournament");
 const FirebaseConfig = require("../config/FirebaseConfig");
+const database = FirebaseConfig();
 
 const callAPI = async (id, database) => {
   try {
@@ -43,6 +44,7 @@ const callAPI = async (id, database) => {
           }
         }
       }
+
       let avg = (matchWin * 100) / apiHistoric.data.length;
       winRate = parseFloat(avg).toFixed(2) + "%";
 
@@ -64,10 +66,9 @@ const callAPI = async (id, database) => {
       Muted: "#1c313a",
       Vibrant: "#718792",
     };
-    console.log(colorsTeam);
-    const filterByWinner = true;
+
     return {
-      historicMatches: FormatMatches(apiHistoric, database, filterByWinner),
+      historicMatches: FormatMatches(apiHistoric, database, true),
       upcomingMatches: FormatMatches(apiUpcoming, database),
       roster: formatRoster(apiRoster),
       winStrike: winStrike,
@@ -81,14 +82,12 @@ const callAPI = async (id, database) => {
   }
 };
 
-router.get("/:id", async (req, res) => {
-  const database = FirebaseConfig();
+router.get("/:id", (req, res) => {
   let DATABASE = database
     .ref()
     .once("value")
     .then(function (snapshot) {
-      let responseOfDatabase = snapshot.val();
-      return responseOfDatabase;
+      return snapshot.val();
     });
   let id = req.params.id;
 
