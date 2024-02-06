@@ -7,21 +7,14 @@
     "start": "node .",
     "dev": "nodemon ."
   },
-  "author": "kremow",
+  "author": "ALAN WENDORFF",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.21.1",
     "body-parser": "^1.19.0",
-    "colorthief": "^2.3.2",
     "cors": "^2.8.5",
     "dotenv": "^8.6.0",
     "express": "^4.17.1",
-    "firebase": "^8.2.6",
-    "hltv": "^2.24.2",
-    "hltv-api": "^2.1.0",
-    "node-vibrant": "^3.2.1-alpha.1",
-    "nodemon": "^2.0.7",
-    "react-palette": "^1.0.2",
-    "tinycolor2": "^1.4.2"
+    "nodemon": "^2.0.7"
   }
 }
