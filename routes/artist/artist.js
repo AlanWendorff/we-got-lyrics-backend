@@ -1,4 +1,4 @@
-const { API_CONFIG, HEADERS_DEFAULT } = require("../constants/constants");
+const { API_CONFIG, HEADERS_DEFAULT } = require("../../constants/constants");
 const express = require("express");
 const router = express.Router();
 
