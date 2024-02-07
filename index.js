@@ -13,6 +13,8 @@ app.use(cors());
 
 // Importar rutas
 app.use("/search", require("./routes/search"));
+app.use("/songs", require("./routes/song"));
+
 app.use("/artists", require("./routes/artist/artist"));
 app.use("/artists", require("./routes/artist/songs"));
 

@@ -10,8 +10,9 @@
   "author": "ALAN WENDORFF",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.21.1",
+    "axios": "^1.6.7",
     "body-parser": "^1.19.0",
+    "cheerio-without-node-native": "^1.0.0-rc.2",
     "cors": "^2.8.5",
     "dotenv": "^8.6.0",
     "express": "^4.17.1",
