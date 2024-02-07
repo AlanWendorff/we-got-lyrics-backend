@@ -13,6 +13,7 @@ app.use(cors());
 
 // Importar rutas
 app.use("/search", require("./routes/search"));
+app.use("/artists", require("./routes/artist"));
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, "0.0.0.0", () => {
