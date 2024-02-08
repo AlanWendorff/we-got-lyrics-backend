@@ -2,6 +2,8 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
+const setupArtistEndpoints = require("./routes/artist");
+const setupSongEndpoints = require("./routes/song");
 
 // initialize the app
 const app = express();
@@ -13,12 +15,8 @@ app.use(cors());
 
 // Importar rutas
 app.use("/search", require("./routes/search"));
-
-app.use("/songs", require("./routes/song/song"));
-app.use("/lyrics", require("./routes/song/lyrics"));
-
-app.use("/artists", require("./routes/artist/artist"));
-app.use("/artists", require("./routes/artist/songs"));
+setupSongEndpoints(app);
+setupArtistEndpoints(app);
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, "0.0.0.0", () => {
