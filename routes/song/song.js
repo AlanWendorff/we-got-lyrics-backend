@@ -1,5 +1,4 @@
-const { API_CONFIG, HEADERS_DEFAULT } = require("../constants/constants");
-const extractLyrics = require("../utils/extractLyrics");
+const { API_CONFIG, HEADERS_DEFAULT } = require("../../constants/constants");
 const express = require("express");
 const router = express.Router();
 
@@ -16,14 +15,10 @@ router.get("/:id", async (req, res) => {
     headers,
   }).then((response) => response.json());
 
-  let lyrics = await extractLyrics(data.response.song.url).then(
-    (response) => response
-  );
-
   res.send({
     meta: data.meta,
     response: {
-      song: { ...data.response.song, lyrics: lyrics },
+      song: { ...data.response.song },
     },
   });
 });
