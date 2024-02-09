@@ -17,7 +17,6 @@ module.exports = async function (id, headers) {
       headers,
     });
 
-    console.log(data);
     let lyrics = await extractLyrics(song.url);
     return {
       id: song.id,

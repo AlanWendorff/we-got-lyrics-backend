@@ -1,4 +1,5 @@
 const { API_CONFIG, HEADERS_DEFAULT } = require("../../constants/constants");
+const extractArtistDescription = require("../../utils/extractArtistDescription");
 const express = require("express");
 const router = express.Router();
 
@@ -17,7 +18,16 @@ router.get("/:id", async (req, res) => {
     return response.json();
   });
 
-  res.send(data);
+  let description = await extractArtistDescription(
+    data.response.artist.url
+  ).then((response) => response);
+
+  res.send({
+    meta: data.meta,
+    response: {
+      artist: { ...data.response.artist, formatted_description: description },
+    },
+  });
 });
 
 module.exports = router;
