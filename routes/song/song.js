@@ -1,4 +1,5 @@
 const { API_CONFIG, HEADERS_DEFAULT } = require("../../constants/constants");
+const extractColor = require("../../utils/extractColor");
 const express = require("express");
 const router = express.Router();
 
@@ -15,10 +16,14 @@ router.get("/:id", async (req, res) => {
     headers,
   }).then((response) => response.json());
 
+  let header_image_colors = await extractColor(
+    data.response.song.header_image_url
+  ).then((response) => response);
+
   res.send({
     meta: data.meta,
     response: {
-      song: { ...data.response.song },
+      song: { ...data.response.song, header_image_colors },
     },
   });
 });
