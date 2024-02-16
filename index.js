@@ -15,6 +15,7 @@ app.use(cors());
 
 // Importar rutas
 app.use("/search", require("./routes/search"));
+app.use("/charts", require("./routes/charts"));
 setupSongEndpoints(app);
 setupArtistEndpoints(app);
 
