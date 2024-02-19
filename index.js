@@ -19,7 +19,7 @@ app.use("/charts", require("./routes/charts"));
 setupSongEndpoints(app);
 setupArtistEndpoints(app);
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Servidor funcionando en el puerto ${PORT}`);
 });

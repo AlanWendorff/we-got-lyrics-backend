@@ -1,6 +1,6 @@
 const { API_CONFIG, HEADERS_DEFAULT } = require("../../constants/constants");
-const extractArtistDescription = require("../../utils/extractArtistDescription");
-const extractColor = require("../../utils/extractColor");
+const extractArtistDescription = require("../../utils/cheerio/extractArtistDescription");
+const extractColor = require("../../utils/cheerio/extractColor");
 const express = require("express");
 const router = express.Router();
 

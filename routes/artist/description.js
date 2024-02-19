@@ -1,4 +1,4 @@
-const extractArtistDescription = require("../../utils/extractArtistDescription");
+const extractArtistDescription = require("../../utils/cheerio/extractArtistDescription");
 const express = require("express");
 const router = express.Router();
 

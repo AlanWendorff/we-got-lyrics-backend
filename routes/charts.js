@@ -1,4 +1,4 @@
-const extractCharts = require("../utils/extractCharts");
+const extractCharts = require("../utils/cheerio/extractCharts");
 const express = require("express");
 const router = express.Router();
 
